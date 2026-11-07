@@ -1,0 +1,55 @@
+{
+  lib,
+  stdenv,
+  fetchFromSourcehut,
+  pkg-config,
+  neuwld,
+  neuswc,
+  wayland-protocols,
+  wayland-scanner,
+  wayland,
+  pixman,
+  fontconfig,
+  libxkbcommon,
+  libdrm,
+}:
+stdenv.mkDerivation {
+  pname = "neumenu";
+  version = "4.6";
+  src = fetchFromSourcehut {
+    owner = "~uint";
+    repo = "neumenu";
+    rev = "88d0bd8bb47a3bea4e806087b4be95af226d5bb3";
+    hash = "sha256-oASly6REP1EGV8jBROMZJR+Q8TrkVNKga4Yub37xjxo=";
+  };
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  nativeBuildInputs = [
+    pkg-config
+    wayland-scanner
+  ];
+
+  buildInputs = [
+    wayland-protocols
+    wayland
+    neuwld
+    libxkbcommon
+    fontconfig
+    pixman
+    libdrm
+  ];
+
+  makeFlags = [
+    "PREFIX=$(out)"
+    "SWCPROTO=${neuswc}/share/swc/swc.xml"
+  ];
+
+  meta = {
+    description = "An efficient dynamic menu for wayland";
+    homepage = "https://git.sr.ht/~uint/neumenu";
+    license = lib.licenses.mit;
+    mainProgram = "neumenu";
+  };
+}
