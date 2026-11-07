@@ -46,6 +46,12 @@ let
       "PREFIX=$(out)"
     ];
 
+    # The unwrapped bin dir is all we need from `make install`; the desktop
+    # entry is regenerated at the top level (pointed at blitz-launch).
+    postInstall = ''
+      rm $out/share/wayland-sessions/blitz.desktop
+    '';
+
     postPatch =
       let
         configFile =
@@ -70,6 +76,19 @@ let
     fi
     exec "$SWC_LAUNCH" "${unwrapped}/bin/blitz" "$@"
   '';
+
+  # uwsm (and display managers) resolve share/wayland-sessions/blitz.desktop.
+  # Upstream Exec=blitz would bypass the setuid swc-launch wrapper, so ship
+  # our own entry pointed at blitz-launch (the unwrapped derivation's copy
+  # installed by `make install` is removed in postInstall below).
+  desktopItem = writeText "blitz.desktop" ''
+    [Desktop Entry]
+    Name=blitz
+    Comment=Keyboard-driven infinite-canvas Wayland compositor
+    Exec=${launcher}/bin/blitz-launch
+    Type=Application
+    DesktopNames=blitz
+  '';
 in
 symlinkJoin {
   pname = "blitz";
@@ -78,6 +97,10 @@ symlinkJoin {
     unwrapped
     launcher
   ];
+  postBuild = ''
+    mkdir -p $out/share/wayland-sessions
+    ln -s ${desktopItem} $out/share/wayland-sessions/blitz.desktop
+  '';
   passthru = {
     inherit unwrapped;
   };
