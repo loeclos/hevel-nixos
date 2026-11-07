@@ -58,22 +58,12 @@ let
   };
 
   launcher = writeShellScriptBin "hevel-launch" ''
-    # Look for NixOS setuid wrapper first so GDM/SDDM/unprivileged users can open DRM & VT
     if [ -x /run/wrappers/bin/swc-launch ]; then
       SWC_LAUNCH=/run/wrappers/bin/swc-launch
     else
       SWC_LAUNCH="${swcLaunchPath}"
     fi
     exec "$SWC_LAUNCH" "${unwrapped}/bin/hevel" "$@"
-  '';
-
-  desktopItem = writeText "hevel.desktop" ''
-    [Desktop Entry]
-    Name=Hevel
-    Comment=Scrollable, floating Plan 9-inspired Wayland window manager
-    Exec=${launcher}/bin/hevel-launch
-    Type=Application
-    DesktopNames=hevel
   '';
 in
 symlinkJoin {
@@ -83,12 +73,7 @@ symlinkJoin {
     unwrapped
     launcher
   ];
-  postBuild = ''
-    mkdir -p $out/share/wayland-sessions
-    ln -s ${desktopItem} $out/share/wayland-sessions/hevel.desktop
-  '';
   passthru = {
     inherit unwrapped;
-    providedSessions = [ "hevel" ];
   };
 }

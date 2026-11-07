@@ -2,18 +2,17 @@
 
 # hevel-nixos
 
-Local NixOS flake packaging [`hevel`](https://sr.ht/~dlm/hevel/) and its `neulibs` dependencies (`neuwld`, `neuswc`, `hst`, `neumenu`), plus a complete `programs.hevel` NixOS module with GDM/SDDM session integration and Nix-native `config.h` options.
+Local NixOS flake packaging [`hevel`](https://sr.ht/~dlm/hevel/) and its `neulibs` dependencies (`neuwld`, `neuswc`, `hst`, `neumenu`), plus a `programs.hevel` NixOS module with Nix-native `config.h` options.
 
 ## What's Inside
 
 - `packages/neuwld` — Wayland drawing library (`wld` fork)
 - `packages/neuswc` — Wayland compositor library (`swc` fork) + `swc-launch`
-- `packages/hevel` — `hevel` + `hevel-launch` wrapper + `share/wayland-sessions/hevel.desktop`
+- `packages/hevel` — `hevel` + `hevel-launch` wrapper
 - `packages/hst` — `st-wl` fork built on `neuwld`
 - `packages/neumenu` — dynamic Wayland menu built on `neuwld`/`neuswc`
 - `modules/hevel.nix` — `programs.hevel` NixOS module:
   - Creates `/run/wrappers/bin/swc-launch` via `security.wrappers.swc-launch` (setuid root, required because `neuswc` opens `/dev/dri/*`, `/dev/input/*`, and VTs directly without `logind`/`libseat` and drops privileges before spawning `hevel`)
-  - Registers `hevel.desktop` in `services.displayManager.sessionPackages` for GDM/SDDM
   - Generates `config.h` directly from `programs.hevel.settings.*`
 - `hosts/example.nix` — ready-to-import NixOS configuration snippet
 

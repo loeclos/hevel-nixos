@@ -148,7 +148,7 @@ in
       type = lib.types.package;
       readOnly = true;
       default = configuredPackage;
-      description = "Final configured hevel package including hevel-launch and wayland-sessions.";
+      description = "Final configured hevel package including hevel-launch.";
     };
 
     terminalPreset = lib.mkOption {
@@ -356,8 +356,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # 1. Privilege wrapper: neuswc's swc-launch opens /dev/dri/*, /dev/input/*, and /dev/tty* directly
-    # (no logind/libseat backend) and drops privileges to the real UID before exec'ing hevel.
+    # Privilege wrapper: neuswc's swc-launch opens /dev/dri/*, /dev/input/*, and /dev/tty* directly
+    # and drops privileges to the real UID before exec'ing hevel.
     security.wrappers.swc-launch = {
       source = "${cfg.neuswcPackage}/bin/swc-launch";
       owner = "root";
@@ -365,10 +365,6 @@ in
       setuid = true;
     };
 
-    # 2. Register hevel.desktop with GDM / SDDM / display managers
-    services.displayManager.sessionPackages = [ configuredPackage ];
-
-    # 3. Packages in PATH
     environment.systemPackages =
       [
         configuredPackage
@@ -376,10 +372,5 @@ in
       ]
       ++ lib.optional (cfg.terminalPackage != null) cfg.terminalPackage
       ++ lib.optional cfg.installExtraUtils localPkgs.neumenu;
-
-    # 4. Graphics & input prerequisites
-    hardware.graphics.enable = lib.mkDefault true;
-    services.libinput.enable = lib.mkDefault true;
-    fonts.enableDefaultPackages = lib.mkDefault true;
   };
 }
