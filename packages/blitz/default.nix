@@ -21,8 +21,8 @@ let
     src = fetchFromGitHub {
       owner = "loeclos";
       repo = "blitz";
-      rev = "cefeeefb763a1d961c7fa0bb88e6cbd492b23a7e";
-      hash = "sha256-EUpyzprLAhce6tC1ro7LiLcZRgpoXGT+t3R4DgnvgEw=";
+      rev = "af3bf714a89c0b47180318802c5f92b648f415f7";
+      hash = "sha256-53xbRbb38y7jV26Q0TzItpe0L/Ofse1I1+NlGAQeoPI=";
     };
 
     strictDeps = true;

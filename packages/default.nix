@@ -6,6 +6,7 @@ let
     hevel = self.callPackage ./hevel { };
     hst = self.callPackage ./hst { };
     neumenu = self.callPackage ./neumenu { };
+    mojito = self.callPackage ./mojito { };
     wawa = self.callPackage ./wawa { };
     blitz = self.callPackage ./blitz { };
   });
@@ -17,6 +18,7 @@ in
     hevel
     hst
     neumenu
+    mojito
     wawa
     blitz
     ;

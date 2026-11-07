@@ -56,6 +56,7 @@
             hevel
             hst
             neumenu
+            mojito
             wawa
             blitz
             ;
