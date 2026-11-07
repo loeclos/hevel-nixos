@@ -35,6 +35,7 @@
 
       nixosModules = {
         hevel = import ./modules/hevel.nix { inherit self; };
+        blitz = import ./modules/blitz.nix { inherit self; };
         default = self.nixosModules.hevel;
       };
 
@@ -51,6 +52,7 @@
             hst
             neumenu
             wawa
+            blitz
             ;
         }
       );

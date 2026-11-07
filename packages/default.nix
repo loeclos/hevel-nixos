@@ -7,6 +7,7 @@ let
     hst = self.callPackage ./hst { };
     neumenu = self.callPackage ./neumenu { };
     wawa = self.callPackage ./wawa { };
+    blitz = self.callPackage ./blitz { };
   });
 in
 {
@@ -17,5 +18,6 @@ in
     hst
     neumenu
     wawa
+    blitz
     ;
 }
