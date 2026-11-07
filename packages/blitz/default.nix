@@ -4,6 +4,7 @@
   writeShellScriptBin,
   symlinkJoin,
   stdenv,
+  fetchFromGitHub,
   neuswc,
   pkg-config,
   wayland,
@@ -17,7 +18,12 @@ let
     pname = "blitz-unwrapped";
     version = "0-unstable-2026-11-07";
 
-    src = ./src;
+    src = fetchFromGitHub {
+      owner = "loeclos";
+      repo = "blitz";
+      rev = "cefeeefb763a1d961c7fa0bb88e6cbd492b23a7e";
+      hash = "sha256-EUpyzprLAhce6tC1ro7LiLcZRgpoXGT+t3R4DgnvgEw=";
+    };
 
     strictDeps = true;
     __structuredAttrs = true;
