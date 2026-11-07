@@ -12,6 +12,7 @@ Local NixOS flake packaging [`hevel`](https://sr.ht/~dlm/hevel/) and its `neulib
 - `packages/hst` — `st-wl` fork built on `neuwld`
 - `packages/neumenu` — dynamic Wayland menu built on `neuwld`/`neuswc`
 - `packages/wawa` — wallpaper setter for `wlr-layer-shell` compositors
+- `packages/blitz` — keyboard-driven infinite-canvas compositor (sources at `github:loeclos/blitz`)
 - `modules/hevel.nix` — `programs.hevel` NixOS module:
   - Creates `/run/wrappers/bin/swc-launch` via `security.wrappers.swc-launch` (setuid root, required because `neuswc` opens `/dev/dri/*`, `/dev/input/*`, and VTs directly without `logind`/`libseat` and drops privileges before spawning `hevel`)
   - Generates `config.h` directly from `programs.hevel.settings.*`
