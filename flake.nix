@@ -36,7 +36,12 @@
       nixosModules = {
         hevel = import ./modules/hevel.nix { inherit self; };
         blitz = import ./modules/blitz.nix { inherit self; };
-        default = self.nixosModules.hevel;
+        default = {
+          imports = [
+            self.nixosModules.hevel
+            self.nixosModules.blitz
+          ];
+        };
       };
 
       checks = forAllSystems (
